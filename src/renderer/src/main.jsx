@@ -11,9 +11,9 @@ createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <StrictMode>
       <Routes>
-        <Route path='/' element={<App/>}/>
-        <Route path='/create' element={<CreatePartners/>}/>
-        <Route path='/update' element={<UpdatePartners/>}/>
+        <Route path="/" element={<App />} />
+        <Route path="/create" element={<CreatePartners />} />
+        <Route path="/update" element={<UpdatePartners />} />
       </Routes>
     </StrictMode>
   </BrowserRouter>

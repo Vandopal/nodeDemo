@@ -33,8 +33,7 @@ function createWindow() {
   }
 }
 
-
-app.whenReady().then( async () => {
+app.whenReady().then(async () => {
   electronApp.setAppUserModelId('com.electron')
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)
@@ -43,8 +42,8 @@ app.whenReady().then( async () => {
   await client.connect()
 
   ipcMain.handle('getPartners', async function getPartners() {
-      try {
-        const resp = await client.query(`SELECT partners.*, discount_data.discount
+    try {
+      const resp = await client.query(`SELECT partners.*, discount_data.discount
 FROM partners
 LEFT JOIN (
     SELECT total_summary.id_partner_name, 
@@ -61,44 +60,45 @@ LEFT JOIN (
     ) AS total_summary
 ) AS discount_data ON partners.id = discount_data.id_partner_name;
 `)
-        return resp.rows
-      } catch (e) {
-        console.log(e)
-      }
+      return resp.rows
+    } catch (e) {
+      console.log(e)
+    }
   })
 
   ipcMain.handle('createPartner', async function createPartner(event, partner) {
-    const {type, name, director, email, telephone, address, inn, rating} = partner
-   await client.query(`INSERT INTO partners (partner_type, partner_name, director, email, telephone, address, inn, rating)
-   VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`, [type, name, director, email, telephone, address, inn, rating]);
+    const { type, name, director, email, telephone, address, inn, rating } = partner
+    await client.query(
+      `INSERT INTO partners (partner_type, partner_name, director, email, telephone, address, inn, rating)
+   VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+      [type, name, director, email, telephone, address, inn, rating]
+    )
   })
 
   ipcMain.handle('updatePartner', async function updatePartner(event, partner) {
-  const { id, type, name, director, email, telephone, address, inn , rating } = partner;
+    const { id, type, name, director, email, telephone, address, inn, rating } = partner
 
-  try {
+    try {
+      // await client.query(`UPDATE partners
+      //   SET partner_name = $1,
+      //       partner_type = $2,
+      //       director = $3,
+      //       email = $4,
+      //       inn = $5,
+      //       telephone = $6,
+      //       address = $7,
+      //       rating = $8
+      // WHERE id = $9`,
+      // [name, type, director, email, inn, telephone, address, rating, id]);
 
-    // await client.query(`UPDATE partners
-    //   SET partner_name = $1, 
-    //       partner_type = $2, 
-    //       director = $3, 
-    //       email = $4, 
-    //       inn = $5, 
-    //       telephone = $6, 
-    //       address = $7, 
-    //       rating = $8
-    // WHERE id = $9`, 
-    // [name, type, director, email, inn, telephone, address, rating, id]);
-
-    await client.query(`UPDATE partners
+      await client.query(`UPDATE partners
       SET partner_name = '${name}', partner_type = '${type}', director='${director}', email='${email}', inn=${inn}, telephone='${telephone}', address='${address}', rating='${rating}'
       WHERE partners.id = ${id};`)
-    return;
-  } catch (e) {
-    return ('error')
-  }
-}
-)
+      return
+    } catch (error) {
+      return console.log(error)
+    }
+  })
 
   createWindow()
 
@@ -107,10 +107,8 @@ LEFT JOIN (
   })
 })
 
-
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
   }
 })
-
