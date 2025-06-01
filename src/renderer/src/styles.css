@@ -1,0 +1,65 @@
+*{
+    margin: 5px;
+}
+body {
+    display: flex;
+    justify-content:  center;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+img {
+    width: 50px;
+    height: 50px;
+}
+
+.page-header {
+    display: flex;
+    justify-content: start;
+    margin-left: 0;
+    align-items: center;
+    gap: 20px;
+}
+
+li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    border: solid 1px;
+    margin: 10px;
+    padding: 10px;
+}
+
+.main-info {
+    width: 300px;
+    height: auto;
+}
+
+ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+}
+
+.discount {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: auto;
+}
+
+.list {
+    border: solid 1px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: auto;
+    border: solid 1px;
+}
