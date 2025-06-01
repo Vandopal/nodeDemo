@@ -73,6 +73,33 @@ LEFT JOIN (
    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`, [type, name, director, email, telephone, address, inn, rating]);
   })
 
+  ipcMain.handle('updatePartner', async function updatePartner(event, partner) {
+  const { id, type, name, director, email, telephone, address, inn , rating } = partner;
+
+  try {
+
+    // await client.query(`UPDATE partners
+    //   SET partner_name = $1, 
+    //       partner_type = $2, 
+    //       director = $3, 
+    //       email = $4, 
+    //       inn = $5, 
+    //       telephone = $6, 
+    //       address = $7, 
+    //       rating = $8
+    // WHERE id = $9`, 
+    // [name, type, director, email, inn, telephone, address, rating, id]);
+
+    await client.query(`UPDATE partners
+      SET partner_name = '${name}', partner_type = '${type}', director='${director}', email='${email}', inn=${inn}, telephone='${telephone}', address='${address}', rating='${rating}'
+      WHERE partners.id = ${id};`)
+    return;
+  } catch (e) {
+    return ('error')
+  }
+}
+)
+
   createWindow()
 
   app.on('activate', function () {
